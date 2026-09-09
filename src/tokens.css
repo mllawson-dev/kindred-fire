@@ -1,0 +1,43 @@
+/*
+  Design tokens shared with Evergrace Music (locked there — kept identical
+  here on purpose so Kindred Fire visibly belongs to the same brand system
+  even though it's built with a completely different technique set).
+
+  NOTE: spacing/type-scale numeric values below are a reasonable starting
+  scale for this build — swap in Evergrace's exact locked scale values if/
+  when copying over the real design-tokens file.
+*/
+
+:root {
+  /* Brand core (locked in Evergrace Music) */
+  --color-gold: #c9973b;
+  --color-gold-soft: #e2b968;
+  --color-charcoal-900: #16130f;
+  --color-charcoal-800: #241f1b;
+
+  /* Genre accent (locked in Evergrace Music) — dominant here, not just accent */
+  --color-ember-red: #b23a2e;
+  --color-ember-bright: #e8622f;
+  --color-ember-deep: #6e1f18;
+
+  /* Typography (locked in Evergrace Music) */
+  --font-heading: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Karla", system-ui, sans-serif;
+
+  --text-hero: clamp(3rem, 9vw, 7rem);
+  --text-h2: clamp(1.75rem, 4vw, 2.75rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+
+  /* Spacing */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+
+  /* Motion */
+  --ease-fire: cubic-bezier(0.22, 0.9, 0.32, 1);
+  --duration-transition: 480ms;
+}

@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Kindred Fire — Kindled</title>
+    <meta name="description" content="Every ember has a voice. The Kindred Fire's new album, Kindled, is out November 6 — tour dates, lyrics, and the story behind the record." />
+    <meta name="theme-color" content="#16130f" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 210'%3E%3Crect width='200' height='210' rx='28' fill='%2316130F'/%3E%3Crect x='18' y='190' width='160' height='12' rx='5' fill='%23C9973B'/%3E%3Cpath d='M20,198 C16.5,143 39.6,101.2 43.8,88 C62,101.2 93.5,143 90,198 Z' fill='%23C9973B'/%3E%3Cpath d='M65,192 C65,114.5 95.56,55.6 113.96,37 C121.16,55.6 145,114.5 145,192 Z' fill='%23C9973B'/%3E%3Cpath d='M115,196 C115,151 139.72,116.8 156.52,106 C158.92,116.8 175,151 175,196 Z' fill='%23C9973B'/%3E%3Ccircle cx='118' cy='26' r='3.5' fill='%23C9973B'/%3E%3C/svg%3E" />
+
+    <!-- Open Graph / Twitter Card. og:image is a relative path for local dev —
+         swap to an absolute URL (https://yourdomain/og-image.png) once this
+         is deployed to a real domain; most crawlers want a full URL. -->
+    <meta property="og:type" content="music.album" />
+    <meta property="og:site_name" content="The Kindred Fire" />
+    <meta property="og:title" content="The Kindred Fire — Kindled" />
+    <meta property="og:description" content="Every ember has a voice. The new album, out November 6." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Kindred Fire — Every Ember Has a Voice. Kindled, the new album, out November 6." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Kindred Fire — Kindled" />
+    <meta name="twitter:description" content="Every ember has a voice. The new album, out November 6." />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Karla:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/src/tokens.css" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body class="state-hero">
+    <!-- SITE MARK — persistent brand lockup, visible in hero and panel states -->
+    <button id="site-mark" class="site-mark" type="button" aria-label="The Kindred Fire — back to hero">
+      <svg class="site-mark__icon" viewBox="0 0 200 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="lobeMarkA" x1="55" y1="198" x2="43.8" y2="88" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#6E1F18"/><stop offset="55%" stop-color="#B23A2E"/><stop offset="100%" stop-color="#E8622F"/>
+          </linearGradient>
+          <linearGradient id="lobeMarkB" x1="105" y1="192" x2="113.96" y2="37" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#B23A2E"/><stop offset="55%" stop-color="#E8622F"/><stop offset="100%" stop-color="#E2B968"/>
+          </linearGradient>
+          <linearGradient id="lobeMarkC" x1="145" y1="196" x2="156.52" y2="106" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#6E1F18"/><stop offset="55%" stop-color="#B23A2E"/><stop offset="100%" stop-color="#E8622F"/>
+          </linearGradient>
+        </defs>
+        <rect x="18" y="190" width="160" height="12" rx="5" fill="#6E1F18"/>
+        <path d="M20,198 C16.5,143 39.6,101.2 43.8,88 C62,101.2 93.5,143 90,198 Z" fill="url(#lobeMarkA)"/>
+        <path d="M65,192 C65,114.5 95.56,55.6 113.96,37 C121.16,55.6 145,114.5 145,192 Z" fill="url(#lobeMarkB)"/>
+        <path d="M115,196 C115,151 139.72,116.8 156.52,106 C158.92,116.8 175,151 175,196 Z" fill="url(#lobeMarkC)"/>
+        <circle cx="118" cy="26" r="3.5" fill="#E2B968"/>
+      </svg>
+      <span class="site-mark__word">Kindred Fire</span>
+    </button>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+      <canvas id="visualizer" class="hero__canvas"></canvas>
+
+      <div class="hero__vignette" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow">The Kindred Fire</p>
+        <h1 class="hero__tagline" data-copy="tagline"></h1>
+        <p class="hero__subhead" data-copy="subhead"></p>
+
+        <button id="play-toggle" class="btn btn--ghost" type="button" aria-pressed="false">
+          <span class="btn__dot" aria-hidden="true"></span>
+          <span data-label="idle"></span>
+        </button>
+      </div>
+
+      <button id="enter-panel" class="hero__enter" type="button" aria-label="Enter the site">
+        <span class="hero__enter-label">Enter</span>
+        <span class="hero__enter-icon" aria-hidden="true">↓</span>
+      </button>
+    </section>
+
+    <!-- CONTENT PANEL -->
+    <section id="panel" class="panel" aria-hidden="true">
+      <div class="panel__header">
+        <button id="back-to-hero" class="btn btn--text panel__back" type="button">
+          ← Back to hero
+        </button>
+        <span class="panel__mark">Kindled — Nov 06</span>
+      </div>
+
+      <nav class="tabs" role="tablist" aria-label="Kindred Fire sections">
+        <button class="tabs__pill" role="tab" id="tab-tour" aria-controls="panel-tour" aria-selected="true" data-tab="tour">
+          <span class="tabs__index">01</span> Tour
+        </button>
+        <button class="tabs__pill" role="tab" id="tab-kindled" aria-controls="panel-kindled" aria-selected="false" data-tab="kindled" tabindex="-1">
+          <span class="tabs__index">02</span> Kindled
+        </button>
+        <button class="tabs__pill" role="tab" id="tab-lyrics" aria-controls="panel-lyrics" aria-selected="false" data-tab="lyrics" tabindex="-1">
+          <span class="tabs__index">03</span> Lyrics
+        </button>
+        <button class="tabs__pill" role="tab" id="tab-mission" aria-controls="panel-mission" aria-selected="false" data-tab="mission" tabindex="-1">
+          <span class="tabs__index">04</span> Mission
+        </button>
+      </nav>
+
+      <div class="tabs__panels">
+        <div id="panel-tour" class="tab-panel" role="tabpanel" aria-labelledby="tab-tour">
+          <div class="tab-panel__heading">
+            <h2>On the Road</h2>
+            <p>Six cities. One flame passed hand to hand.</p>
+          </div>
+          <hr class="ember-rule" />
+          <ul id="tour-list" class="tour-list"></ul>
+        </div>
+
+        <div id="panel-kindled" class="tab-panel" role="tabpanel" aria-labelledby="tab-kindled" hidden>
+          <div class="tab-panel__heading">
+            <h2>Kindled</h2>
+            <p>Nine songs. Not one big fire — a lot of small ones.</p>
+          </div>
+          <hr class="ember-rule" />
+          <div class="album-layout">
+            <div class="album-cover">
+              <svg class="album-cover__art" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <radialGradient id="coverGlow" cx="50%" cy="84%" r="70%">
+                    <stop offset="0%" stop-color="#3a1f14" stop-opacity="0.9"/>
+                    <stop offset="60%" stop-color="#1f1711" stop-opacity="0.45"/>
+                    <stop offset="100%" stop-color="#16130f" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="coverGradA" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="#6e1f18"/>
+                    <stop offset="55%" stop-color="#b23a2e"/>
+                    <stop offset="100%" stop-color="#e8622f"/>
+                  </linearGradient>
+                  <linearGradient id="coverGradB" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="#b23a2e"/>
+                    <stop offset="55%" stop-color="#e8622f"/>
+                    <stop offset="100%" stop-color="#e2b968"/>
+                  </linearGradient>
+                  <linearGradient id="coverGradC" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="#16130f"/>
+                    <stop offset="60%" stop-color="#6e1f18"/>
+                    <stop offset="100%" stop-color="#b23a2e"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="400" fill="#16130f"/>
+                <rect width="400" height="400" fill="url(#coverGlow)"/>
+                <g fill="#e2b968">
+                  <circle cx="48" cy="96" r="2" opacity="0.5"/>
+                  <circle cx="110" cy="58" r="1.5" opacity="0.4"/>
+                  <circle cx="167" cy="120" r="2.5" opacity="0.6" fill="#e8622f"/>
+                  <circle cx="223" cy="70" r="1.5" opacity="0.35"/>
+                  <circle cx="276" cy="132" r="2" opacity="0.55" fill="#c9973b"/>
+                  <circle cx="318" cy="64" r="1.5" opacity="0.4"/>
+                  <circle cx="355" cy="150" r="2.5" opacity="0.5" fill="#e8622f"/>
+                  <circle cx="30" cy="190" r="1.5" opacity="0.45"/>
+                  <circle cx="140" cy="210" r="2" opacity="0.4" fill="#e2b968"/>
+                  <circle cx="260" cy="200" r="1.5" opacity="0.45"/>
+                  <circle cx="370" cy="225" r="2" opacity="0.4" fill="#c9973b"/>
+                  <circle cx="200" cy="165" r="1.5" opacity="0.3"/>
+                </g>
+                <rect x="-20" y="385" width="440" height="14" rx="6" fill="#6e1f18"/>
+                <path d="M-20,392 C-24,330 6,310 20,295 C36,312 62,330 58,392 Z" fill="url(#coverGradA)"/>
+                <path d="M35,392 C30,300 55,260 85,240 C112,262 132,300 125,392 Z" fill="url(#coverGradB)"/>
+                <path d="M100,392 C96,350 112,335 140,320 C162,336 180,352 175,392 Z" fill="url(#coverGradC)"/>
+                <path d="M150,392 C144,290 172,245 205,225 C236,248 258,292 245,392 Z" fill="url(#coverGradB)"/>
+                <path d="M210,392 C206,340 228,318 255,300 C278,320 298,342 290,392 Z" fill="url(#coverGradA)"/>
+                <path d="M260,392 C254,296 284,250 315,235 C344,252 368,298 355,392 Z" fill="url(#coverGradB)"/>
+                <path d="M305,392 C300,352 318,336 350,315 C370,338 388,354 385,392 Z" fill="url(#coverGradC)"/>
+                <path d="M345,392 C338,312 368,278 395,260 C414,280 428,314 420,392 Z" fill="url(#coverGradB)"/>
+              </svg>
+              <div class="album-cover__mark">
+                <svg class="album-cover__mark-icon" viewBox="0 0 200 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="18" y="190" width="160" height="12" rx="5" fill="#6e1f18"/>
+                  <path d="M20,198 C16.5,143 39.6,101.2 43.8,88 C62,101.2 93.5,143 90,198 Z" fill="url(#coverGradA)"/>
+                  <path d="M65,192 C65,114.5 95.56,55.6 113.96,37 C121.16,55.6 145,114.5 145,192 Z" fill="url(#coverGradB)"/>
+                  <path d="M115,196 C115,151 139.72,116.8 156.52,106 C158.92,116.8 175,151 175,196 Z" fill="url(#coverGradA)"/>
+                  <circle cx="118" cy="26" r="3.5" fill="#e2b968"/>
+                </svg>
+                <span class="album-cover__mark-word">Kindred Fire</span>
+              </div>
+              <div class="album-cover__type">
+                <span class="album-cover__title">Kindled</span>
+              </div>
+            </div>
+            <ol id="tracklist" class="tracklist"></ol>
+          </div>
+        </div>
+
+        <div id="panel-lyrics" class="tab-panel" role="tabpanel" aria-labelledby="tab-lyrics" hidden>
+          <div class="tab-panel__heading">
+            <h2>Every Ember</h2>
+            <p>A verse from the title-adjacent track off <em>Kindled</em>.</p>
+          </div>
+          <hr class="ember-rule" />
+          <button id="open-lyrics" class="btn btn--outline" type="button">Read the lyrics</button>
+        </div>
+
+        <div id="panel-mission" class="tab-panel" role="tabpanel" aria-labelledby="tab-mission" hidden>
+          <div class="tab-panel__heading">
+            <h2>Why We're Here</h2>
+            <p>Not one big fire — a lot of small ones, kindred to each other.</p>
+          </div>
+          <hr class="ember-rule" />
+          <div id="mission-copy" class="mission-copy"></div>
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <div class="site-footer__inner">
+          <div class="site-footer__top">
+            <div class="site-footer__brand">
+              <button id="footer-home" class="site-footer__brand-mark" type="button">
+                <svg class="site-footer__icon" viewBox="0 0 200 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="18" y="190" width="160" height="12" rx="5" fill="#c9973b"/>
+                  <path d="M20,198 C16.5,143 39.6,101.2 43.8,88 C62,101.2 93.5,143 90,198 Z" fill="#c9973b"/>
+                  <path d="M65,192 C65,114.5 95.56,55.6 113.96,37 C121.16,55.6 145,114.5 145,192 Z" fill="#c9973b"/>
+                  <path d="M115,196 C115,151 139.72,116.8 156.52,106 C158.92,116.8 175,151 175,196 Z" fill="#c9973b"/>
+                  <circle cx="118" cy="26" r="3.5" fill="#c9973b"/>
+                </svg>
+                <span class="site-footer__wordmark">Kindred Fire</span>
+              </button>
+              <p class="site-footer__tagline">Every Ember Has a Voice.</p>
+            </div>
+
+            <div class="site-footer__col">
+              <p class="site-footer__col-heading">On the Site</p>
+              <ul class="site-footer__col-links">
+                <li><button class="site-footer__link" type="button" data-footer-tab="tour">Tour</button></li>
+                <li><button class="site-footer__link" type="button" data-footer-tab="kindled">Kindled</button></li>
+                <li><button class="site-footer__link" type="button" data-footer-tab="lyrics">Lyrics</button></li>
+                <li><button class="site-footer__link" type="button" data-footer-tab="mission">Mission</button></li>
+              </ul>
+            </div>
+
+            <div class="site-footer__col">
+              <p class="site-footer__col-heading">Listen</p>
+              <p class="site-footer__note">Streaming links go live with <em>Kindled</em> on Nov 6.</p>
+            </div>
+
+            <div class="site-footer__col">
+              <p class="site-footer__col-heading">Label</p>
+              <p class="site-footer__note">An Evergrace Music artist.</p>
+            </div>
+          </div>
+
+          <div class="site-footer__bottom">
+            <p class="site-footer__copyright">&copy; 2026 The Kindred Fire. All rights reserved.</p>
+            <p class="site-footer__made">Not one big fire — a lot of small ones.</p>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- LYRICS DIALOG -->
+    <dialog id="lyrics-dialog" class="lyrics-dialog">
+      <p class="lyrics-dialog__mark" aria-hidden="true">“</p>
+      <h2 id="lyrics-song" class="lyrics-dialog__song"></h2>
+      <p id="lyrics-lines" class="lyrics-dialog__lines"></p>
+      <form method="dialog">
+        <button class="btn btn--text" type="submit">Close</button>
+      </form>
+    </dialog>
+
+    <div id="cursor-glow" class="cursor-glow" aria-hidden="true"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
