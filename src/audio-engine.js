@@ -88,6 +88,13 @@ export async function toggleAudio() {
   return playing;
 }
 
+export function stopAudio() {
+  if (!playing || !sourceNodes) return false;
+  sourceNodes.merge.disconnect(audioCtx.destination);
+  playing = false;
+  return playing;
+}
+
 export function isPlaying() {
   return playing;
 }

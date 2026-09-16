@@ -9,7 +9,7 @@ const prefersReducedMotion = window.matchMedia(
 export function withViewTransition(mutateDom) {
   if (prefersReducedMotion || !document.startViewTransition) {
     mutateDom();
-    return;
+    return Promise.resolve();
   }
-  document.startViewTransition(mutateDom);
+  return document.startViewTransition(mutateDom).finished;
 }

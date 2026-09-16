@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Kindred Fire — Kindled</title>
-    <meta name="description" content="Every ember has a voice. The Kindred Fire's new album, Kindled, is out November 6 — tour dates, lyrics, and the story behind the record." />
+    <meta name="description" content="A self-initiated interactive music concept for The Kindred Fire, featuring a Web Audio-driven canvas experience, fictional album, lyrics, and tour." />
     <meta name="theme-color" content="#16130f" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 210'%3E%3Crect width='200' height='210' rx='28' fill='%2316130F'/%3E%3Crect x='18' y='190' width='160' height='12' rx='5' fill='%23C9973B'/%3E%3Cpath d='M20,198 C16.5,143 39.6,101.2 43.8,88 C62,101.2 93.5,143 90,198 Z' fill='%23C9973B'/%3E%3Cpath d='M65,192 C65,114.5 95.56,55.6 113.96,37 C121.16,55.6 145,114.5 145,192 Z' fill='%23C9973B'/%3E%3Cpath d='M115,196 C115,151 139.72,116.8 156.52,106 C158.92,116.8 175,151 175,196 Z' fill='%23C9973B'/%3E%3Ccircle cx='118' cy='26' r='3.5' fill='%23C9973B'/%3E%3C/svg%3E" />
 
@@ -14,14 +14,14 @@
     <meta property="og:type" content="music.album" />
     <meta property="og:site_name" content="The Kindred Fire" />
     <meta property="og:title" content="The Kindred Fire — Kindled" />
-    <meta property="og:description" content="Every ember has a voice. The new album, out November 6." />
+    <meta property="og:description" content="A self-initiated interactive music concept driven by Web Audio and Canvas." />
     <meta property="og:image" content="/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="The Kindred Fire — Every Ember Has a Voice. Kindled, the new album, out November 6." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="The Kindred Fire — Kindled" />
-    <meta name="twitter:description" content="Every ember has a voice. The new album, out November 6." />
+    <meta name="twitter:description" content="A self-initiated interactive music concept driven by Web Audio and Canvas." />
     <meta name="twitter:image" content="/og-image.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,6 +35,13 @@
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body class="state-hero">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <aside class="concept-bar" aria-label="Project disclosure">
+      <strong>Self-initiated concept</strong>
+      <span>Fictional band, album, lyrics, venues, and tour.</span>
+    </aside>
+
     <!-- SITE MARK — persistent brand lockup, visible in hero and panel states -->
     <button id="site-mark" class="site-mark" type="button" aria-label="The Kindred Fire — back to hero">
       <svg class="site-mark__icon" viewBox="0 0 200 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -58,21 +65,23 @@
       <span class="site-mark__word">Kindred Fire</span>
     </button>
 
+    <main id="main-content" tabindex="-1">
     <!-- HERO -->
-    <section id="hero" class="hero">
-      <canvas id="visualizer" class="hero__canvas"></canvas>
+    <section id="hero" class="hero" aria-labelledby="hero-title">
+      <canvas id="visualizer" class="hero__canvas" aria-hidden="true"></canvas>
 
       <div class="hero__vignette" aria-hidden="true"></div>
 
       <div class="hero__content">
         <p class="hero__eyebrow">The Kindred Fire</p>
-        <h1 class="hero__tagline" data-copy="tagline"></h1>
+        <h1 id="hero-title" class="hero__tagline" data-copy="tagline"></h1>
         <p class="hero__subhead" data-copy="subhead"></p>
 
         <button id="play-toggle" class="btn btn--ghost" type="button" aria-pressed="false">
           <span class="btn__dot" aria-hidden="true"></span>
           <span data-label="idle"></span>
         </button>
+        <p id="audio-status" class="hero__audio-note" aria-live="polite">Activates generative sound and the live canvas.</p>
       </div>
 
       <button id="enter-panel" class="hero__enter" type="button" aria-label="Enter the site">
@@ -90,7 +99,7 @@
         <span class="panel__mark">Kindled — Nov 06</span>
       </div>
 
-      <nav class="tabs" role="tablist" aria-label="Kindred Fire sections">
+      <nav class="tabs" role="tablist" aria-label="Kindred Fire sections" aria-orientation="horizontal">
         <button class="tabs__pill" role="tab" id="tab-tour" aria-controls="panel-tour" aria-selected="true" data-tab="tour">
           <span class="tabs__index">01</span> Tour
         </button>
@@ -103,13 +112,16 @@
         <button class="tabs__pill" role="tab" id="tab-mission" aria-controls="panel-mission" aria-selected="false" data-tab="mission" tabindex="-1">
           <span class="tabs__index">04</span> Mission
         </button>
+        <button class="tabs__pill" role="tab" id="tab-project" aria-controls="panel-project" aria-selected="false" data-tab="project" tabindex="-1">
+          <span class="tabs__index">05</span> Project
+        </button>
       </nav>
 
       <div class="tabs__panels">
         <div id="panel-tour" class="tab-panel" role="tabpanel" aria-labelledby="tab-tour">
           <div class="tab-panel__heading">
             <h2>On the Road</h2>
-            <p>Six cities. One flame passed hand to hand.</p>
+            <p>Six fictional stops created to demonstrate the tour experience.</p>
           </div>
           <hr class="ember-rule" />
           <ul id="tour-list" class="tour-list"></ul>
@@ -207,6 +219,41 @@
           <hr class="ember-rule" />
           <div id="mission-copy" class="mission-copy"></div>
         </div>
+
+        <div id="panel-project" class="tab-panel project-panel" role="tabpanel" aria-labelledby="tab-project" hidden>
+          <div class="tab-panel__heading project-panel__heading">
+            <p class="project-panel__kicker">Self-initiated concept · Creative Engineering</p>
+            <h2>An identity that responds like an instrument.</h2>
+            <p>Kindred Fire extends the Evergrace Music universe into an immersive artist launch experience built around sound, motion, and an ember-led visual system.</p>
+          </div>
+          <hr class="ember-rule" />
+          <div class="project-story">
+            <section class="project-story__lead" aria-labelledby="project-brief-title">
+              <p class="project-story__label">The brief</p>
+              <h3 id="project-brief-title">Make a fictional release feel alive without relying on a music video or licensed track.</h3>
+              <p>The experience uses a synthesized audio source so the interaction can be demonstrated without borrowed music. Frequency data shapes every canvas frame, turning the interface into part of the band’s identity.</p>
+            </section>
+            <div class="project-story__details">
+              <section>
+                <p class="project-story__label">Designed</p>
+                <p>Artist identity extension, album presentation, interaction flow, responsive UI, and the ember-to-flame motion language.</p>
+              </section>
+              <section>
+                <p class="project-story__label">Built</p>
+                <ul class="project-story__list">
+                  <li>Web Audio API with synthetic tone and filtered noise</li>
+                  <li>Canvas 2D animation driven by live frequency data</li>
+                  <li>Vanilla JavaScript tabs, dialog, and state transitions</li>
+                  <li>Reduced-motion behavior and browser fallbacks</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+          <aside class="project-disclosure">
+            <strong>Concept disclosure</strong>
+            <p>The Kindred Fire, <em>Kindled</em>, the lyrics, venues, release date, and tour are fictional content created for this portfolio project.</p>
+          </aside>
+        </div>
       </div>
 
       <footer class="site-footer">
@@ -233,6 +280,7 @@
                 <li><button class="site-footer__link" type="button" data-footer-tab="kindled">Kindled</button></li>
                 <li><button class="site-footer__link" type="button" data-footer-tab="lyrics">Lyrics</button></li>
                 <li><button class="site-footer__link" type="button" data-footer-tab="mission">Mission</button></li>
+                <li><button class="site-footer__link" type="button" data-footer-tab="project">Project notes</button></li>
               </ul>
             </div>
 
@@ -248,12 +296,13 @@
           </div>
 
           <div class="site-footer__bottom">
-            <p class="site-footer__copyright">&copy; 2026 The Kindred Fire. All rights reserved.</p>
-            <p class="site-footer__made">Not one big fire — a lot of small ones.</p>
+            <p class="site-footer__copyright">&copy; 2026 The Kindred Fire concept.</p>
+            <p class="site-footer__made">Self-initiated · fictional band and release.</p>
           </div>
         </div>
       </footer>
     </section>
+    </main>
 
     <!-- LYRICS DIALOG -->
     <dialog id="lyrics-dialog" class="lyrics-dialog">
