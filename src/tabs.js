@@ -42,7 +42,9 @@ function renderTourList() {
     .map(
       ({ date, city, venue }) => `
       <li class="tour-list__row">
-        <span class="tour-list__date">${new Date(date).toLocaleDateString(
+        <span class="tour-list__date">${formatLocalDate(
+          date
+        ).toLocaleDateString(
           "en-US",
           { month: "short", day: "numeric", year: "numeric" }
         )}</span>
@@ -51,6 +53,11 @@ function renderTourList() {
       </li>`
     )
     .join("");
+}
+
+function formatLocalDate(dateString) {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return new Date(year, month - 1, day);
 }
 
 function renderMission() {
@@ -92,5 +99,25 @@ export function initTabs() {
 
   pills.forEach((pill) => {
     pill.addEventListener("click", () => selectTab(pill.dataset.tab));
+    pill.addEventListener("keydown", (event) => {
+      const currentIndex = pills.indexOf(pill);
+      let nextIndex = null;
+
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+        nextIndex = (currentIndex + 1) % pills.length;
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+        nextIndex = (currentIndex - 1 + pills.length) % pills.length;
+      } else if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = pills.length - 1;
+      }
+
+      if (nextIndex === null) return;
+      event.preventDefault();
+      const nextPill = pills[nextIndex];
+      selectTab(nextPill.dataset.tab);
+      nextPill.focus();
+    });
   });
 }

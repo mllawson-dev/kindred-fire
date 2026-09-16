@@ -63,6 +63,7 @@ export function startVisualizer(canvas) {
   const ctx = canvas.getContext("2d");
   let width, height, dpr;
   let frameId = null;
+  let running = false;
 
   const embers = Array.from({ length: 70 }, () => spawnEmber(true));
   const tongueSeeds = buildTongueSeeds(TONGUE_COUNT);
@@ -219,8 +220,14 @@ export function startVisualizer(canvas) {
   }
 
   function drawFlames(freq, t) {
-    const baseY = height * 0.88;
-    const maxHeight = height * 0.3;
+    const baseY = height * 0.9;
+    const canvasTop = canvas.getBoundingClientRect().top;
+    const contentBottom =
+      document.querySelector(".hero__content")?.getBoundingClientRect().bottom -
+        canvasTop ||
+      height * 0.48;
+    const availableHeight = Math.max(56, baseY - contentBottom - 24);
+    const maxHeight = Math.min(height * 0.3, availableHeight / 1.2);
     const avgSlot = width / TONGUE_COUNT;
 
     ctx.save();
@@ -274,17 +281,36 @@ export function startVisualizer(canvas) {
     drawEmbers(intensity, time);
     if (active) drawFlames(freq, time);
 
-    if (!prefersReducedMotion) {
+    if (!prefersReducedMotion && running) {
       frameId = requestAnimationFrame(frame);
     }
   }
 
+  function resume() {
+    if (running) return;
+    running = true;
+    frame(performance.now());
+  }
+
+  function pause() {
+    running = false;
+    if (frameId) cancelAnimationFrame(frameId);
+    frameId = null;
+  }
+
   resize();
   window.addEventListener("resize", resize);
-  frame(0);
+  resume();
 
-  return () => {
-    if (frameId) cancelAnimationFrame(frameId);
-    window.removeEventListener("resize", resize);
+  return {
+    pause,
+    resume,
+    refresh() {
+      if (prefersReducedMotion) frame(performance.now());
+    },
+    destroy() {
+      pause();
+      window.removeEventListener("resize", resize);
+    },
   };
 }

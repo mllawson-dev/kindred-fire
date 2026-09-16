@@ -1,7 +1,7 @@
 # The Kindred Fire — microsite
 
-Bespoke launch microsite for The Kindred Fire's album *Kindled*, part of the
-Evergrace Music portfolio universe. Deliberately hand-built in vanilla
+Bespoke self-initiated launch concept for The Kindred Fire's fictional album
+*Kindled*, part of the Evergrace Music portfolio universe. Deliberately hand-built in vanilla
 HTML/CSS/JS — no React, no Three.js, no framework — to show a different set
 of techniques than the CineVault and Knob Noster React builds and the
 Evergrace Music component system.
@@ -150,3 +150,18 @@ Graph/social metadata. The one open item is a matter of future content, not
 unfinished build work: the flame visualizer was tuned against the synthetic
 placeholder tone, so if a real reference track ever replaces it, the
 height/color balance is worth a sanity check against that track.
+
+## Portfolio strengthening pass
+
+The portfolio version adds a persistent self-initiated-concept disclosure and
+a fifth **Project** tab that explains the design and engineering decisions
+without interrupting the opening artist experience. It also:
+
+- identifies the band, album, lyrics, venues, release date, and tour as fictional;
+- fixes date-only parsing so tour dates do not shift in western time zones;
+- adds arrow, Home, and End keyboard navigation to the tab interface;
+- adds visible focus treatments, larger interactive targets, and a skip link;
+- clarifies that “Light It Up” activates generative sound and canvas motion;
+- stops audio and the animation loop when the visitor enters the content panel;
+- refreshes the static canvas state for visitors who prefer reduced motion; and
+- updates page metadata and copyright language to reflect concept status.

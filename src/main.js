@@ -1,4 +1,4 @@
-import { toggleAudio } from "./audio-engine.js";
+import { stopAudio, toggleAudio } from "./audio-engine.js";
 import { startVisualizer } from "./visualizer.js";
 import { withViewTransition } from "./transitions.js";
 import { initTabs, selectTab } from "./tabs.js";
@@ -11,19 +11,31 @@ function renderHeroCopy() {
   document.querySelector('[data-label="idle"]').textContent = hero.playLabel;
 }
 
-function wirePlayToggle() {
+function wirePlayToggle(visualizer) {
   const btn = document.getElementById("play-toggle");
-  btn.addEventListener("click", async () => {
-    const playing = await toggleAudio();
+  const status = document.getElementById("audio-status");
+
+  const syncState = (playing) => {
     btn.setAttribute("aria-pressed", String(playing));
     btn.classList.toggle("btn--playing", playing);
     btn.querySelector("[data-label]").textContent = playing
       ? hero.playingLabel
       : hero.playLabel;
+    status.textContent = playing
+      ? "Generative sound is on and driving the live canvas."
+      : "Activates generative sound and the live canvas.";
+    visualizer.refresh();
+  };
+
+  btn.addEventListener("click", async () => {
+    const playing = await toggleAudio();
+    syncState(playing);
   });
+
+  return () => syncState(stopAudio());
 }
 
-function wireHeroPanelSwitch() {
+function wireHeroPanelSwitch({ pausePlayback, visualizer }) {
   const body = document.body;
   const enter = document.getElementById("enter-panel");
   const back = document.getElementById("back-to-hero");
@@ -31,11 +43,13 @@ function wireHeroPanelSwitch() {
   const panel = document.getElementById("panel");
 
   const goToPanel = () => {
+    pausePlayback();
+    visualizer.pause();
     withViewTransition(() => {
       body.classList.remove("state-hero");
       body.classList.add("state-panel");
       panel.setAttribute("aria-hidden", "false");
-    });
+    }).then(() => back.focus());
   };
 
   const goToHero = () => {
@@ -43,7 +57,8 @@ function wireHeroPanelSwitch() {
       body.classList.remove("state-panel");
       body.classList.add("state-hero");
       panel.setAttribute("aria-hidden", "true");
-    });
+    }).then(() => enter.focus());
+    visualizer.resume();
   };
 
   enter.addEventListener("click", goToPanel);
@@ -66,9 +81,9 @@ function wireFooter({ goToHero }) {
 }
 
 renderHeroCopy();
-wirePlayToggle();
-const { goToHero } = wireHeroPanelSwitch();
+const visualizer = startVisualizer(document.getElementById("visualizer"));
+const pausePlayback = wirePlayToggle(visualizer);
+const { goToHero } = wireHeroPanelSwitch({ pausePlayback, visualizer });
 initTabs();
 wireFooter({ goToHero });
 initCursorGlow();
-startVisualizer(document.getElementById("visualizer"));

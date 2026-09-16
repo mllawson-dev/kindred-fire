@@ -13,6 +13,54 @@ body {
 
 body {
   position: relative;
+  padding-top: var(--concept-bar-height, 2.25rem);
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+.skip-link {
+  position: fixed;
+  top: -5rem;
+  left: var(--space-2);
+  z-index: 70;
+  background: #f9e7c4;
+  color: var(--color-charcoal-900);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 999px;
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: calc(var(--concept-bar-height, 2.25rem) + var(--space-1));
+}
+
+.concept-bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  min-height: var(--concept-bar-height, 2.25rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0.45rem var(--space-2);
+  background: #f4ead9;
+  color: var(--color-charcoal-900);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.025em;
+  text-align: center;
+}
+.concept-bar strong {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.concept-bar span::before {
+  content: "·";
+  margin-right: 0.7rem;
+  color: var(--color-ember-red);
 }
 
 /* Subtle film-grain overlay across the whole page — cheap, cinematic,
@@ -37,6 +85,12 @@ h2 {
 button {
   font-family: inherit;
   cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-gold-soft);
+  outline-offset: 4px;
 }
 
 hr {
@@ -68,6 +122,7 @@ hr {
   font-size: var(--text-small);
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  min-height: 44px;
   transition: background 200ms var(--ease-fire), color 200ms var(--ease-fire),
     box-shadow 200ms var(--ease-fire);
 }
@@ -119,7 +174,7 @@ hr {
 /* ---------- Site mark (persistent brand lockup) ---------- */
 .site-mark {
   position: fixed;
-  top: var(--space-2);
+  top: calc(var(--concept-bar-height, 2.25rem) + var(--space-2));
   left: var(--space-3);
   z-index: 20;
   display: flex;
@@ -127,7 +182,9 @@ hr {
   gap: 0.55rem;
   background: none;
   border: none;
-  padding: 0;
+  min-height: 44px;
+  padding: 0.35rem 0.45rem;
+  margin-left: -0.45rem;
   cursor: pointer;
 }
 .site-mark__icon {
@@ -180,7 +237,7 @@ body.state-panel #hero {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: calc(100svh - var(--concept-bar-height, 2.25rem));
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -254,6 +311,14 @@ body.state-panel #hero {
   margin-bottom: var(--space-4);
 }
 
+.hero__audio-note {
+  min-height: 1.2em;
+  margin: var(--space-1) 0 0;
+  color: #a4917c;
+  font-size: 0.78rem;
+  letter-spacing: 0.025em;
+}
+
 .hero__enter {
   position: absolute;
   bottom: var(--space-3);
@@ -268,6 +333,8 @@ body.state-panel #hero {
   border: none;
   color: var(--color-gold-soft);
   animation: bob 2.2s ease-in-out infinite;
+  min-width: 64px;
+  min-height: 52px;
 }
 .hero__enter-label {
   font-size: var(--text-small);
@@ -289,7 +356,7 @@ body.state-panel #hero {
 
 /* ---------- Panel ---------- */
 .panel {
-  min-height: 100svh;
+  min-height: calc(100svh - var(--concept-bar-height, 2.25rem));
   padding: var(--space-4) var(--space-3) var(--space-6);
   max-width: 880px;
   margin: 0 auto;
@@ -329,6 +396,7 @@ body.state-panel #hero {
   font-size: var(--text-small);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  min-height: 44px;
   transition: background 200ms var(--ease-fire), color 200ms var(--ease-fire),
     border-color 200ms var(--ease-fire);
 }
@@ -585,6 +653,90 @@ body.state-panel #hero {
   color: var(--color-ember-bright);
 }
 
+/* ---------- Portfolio project notes ---------- */
+.project-panel__kicker,
+.project-story__label {
+  margin: 0 0 var(--space-1);
+  color: var(--color-ember-bright) !important;
+  font-size: var(--text-small);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-panel__heading h2 {
+  max-width: 18ch;
+}
+
+.project-panel__heading > p:last-child {
+  max-width: 58ch;
+  line-height: 1.65;
+}
+
+.project-story {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
+  gap: clamp(var(--space-4), 7vw, var(--space-6));
+  align-items: start;
+}
+
+.project-story h3 {
+  margin: 0 0 var(--space-2);
+  max-width: 20ch;
+  font-family: var(--font-heading);
+  color: #f9e7c4;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.15;
+}
+
+.project-story__lead > p:last-child,
+.project-story__details p,
+.project-story__list {
+  color: #cbb98f;
+  line-height: 1.7;
+}
+
+.project-story__details {
+  display: grid;
+  gap: var(--space-4);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--color-ember-deep);
+}
+
+.project-story__details p {
+  margin: 0;
+}
+
+.project-story__list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.project-story__list li + li {
+  margin-top: 0.55rem;
+}
+
+.project-disclosure {
+  margin-top: var(--space-5);
+  padding: var(--space-3) 0 var(--space-3) var(--space-3);
+  border-left: 3px solid var(--color-gold);
+  background: linear-gradient(90deg, rgba(201, 151, 59, 0.1), transparent 72%);
+}
+
+.project-disclosure strong {
+  font-family: var(--font-heading);
+  color: var(--color-gold-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.project-disclosure p {
+  max-width: 62ch;
+  margin: var(--space-1) 0 0;
+  color: #cbb98f;
+  line-height: 1.65;
+}
+
 /* ---------- Site footer ---------- */
 .site-footer {
   border-top: 1px solid var(--color-charcoal-800);
@@ -616,7 +768,9 @@ body.state-panel #hero {
   gap: var(--space-1);
   background: none;
   border: none;
-  padding: 0;
+  min-height: 44px;
+  padding: 0.25rem;
+  margin-left: -0.25rem;
   cursor: pointer;
 }
 
@@ -662,7 +816,8 @@ body.state-panel #hero {
 .site-footer__link {
   background: none;
   border: none;
-  padding: 0;
+  min-height: 44px;
+  padding: 0.25rem 0;
   font-family: var(--font-body);
   color: #a4917c;
   text-decoration: none;
@@ -760,6 +915,16 @@ body.state-panel #hero {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --concept-bar-height: 3.15rem;
+  }
+  .concept-bar {
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .concept-bar span::before {
+    content: none;
+  }
   .tour-list__row {
     grid-template-columns: 1fr;
     gap: 0.2rem;
@@ -775,6 +940,15 @@ body.state-panel #hero {
   }
   .tracklist__row {
     grid-template-columns: 1.6rem 1fr auto;
+  }
+  .project-story {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .project-story__details {
+    padding: var(--space-3) 0 0;
+    border-top: 1px solid var(--color-ember-deep);
+    border-left: 0;
   }
 }
 
